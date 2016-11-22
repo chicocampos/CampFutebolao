@@ -37,11 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
+        
+        <div class="col-lg-offset-1">
+            <b>Ainda não é membro? <a href="http://localhost/campfutebolao/web/index.php?r=usuarios%2Fcreate">Registre-se</a></b>
+        </div>
 
     <?php ActiveForm::end(); ?>
 
-    <div class="col-lg-offset-1" style="color:#999;">
-        Você pode logar com <strong>admin/admin</strong> ou <strong>demo/demo</strong>.<br>
-        <?php //To modify the username/password, please check out the code <code>app\models\User::$users</code>. ?>
-    </div>
 </div>

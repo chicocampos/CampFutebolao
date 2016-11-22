@@ -8,6 +8,7 @@ use app\models\TimesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * TimesController implements the CRUD actions for Times model.
@@ -20,6 +21,16 @@ class TimesController extends Controller
     public function behaviors()
     {
         return [
+                        'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['view', 'update', 'delete', 'index', 'create'],
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@']
+                ],
+            ]
+        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

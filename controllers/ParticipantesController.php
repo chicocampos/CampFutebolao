@@ -8,6 +8,7 @@ use app\models\ParticipantesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ParticipantesController implements the CRUD actions for Participantes model.
@@ -20,6 +21,16 @@ class ParticipantesController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['view', 'update', 'delete', 'index', 'create'],
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@']
+                ],
+            ]
+        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

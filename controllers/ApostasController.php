@@ -8,6 +8,7 @@ use app\models\ApostasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ApostasController implements the CRUD actions for Apostas model.
@@ -20,6 +21,16 @@ class ApostasController extends Controller
     public function behaviors()
     {
         return [
+                                    'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['view', 'update', 'delete', 'index', 'create'],
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@']
+                ],
+            ]
+        ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

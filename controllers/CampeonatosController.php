@@ -8,6 +8,7 @@ use app\models\CampeonatosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * CampeonatosController implements the CRUD actions for Campeonatos model.
@@ -20,6 +21,16 @@ class CampeonatosController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+            'class' => AccessControl::className(),
+            'only' => ['view', 'update', 'delete', 'index', 'create'],
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['@']
+                ],
+            ]
+        ],            
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

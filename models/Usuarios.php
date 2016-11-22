@@ -38,7 +38,6 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
         return [
             [['NOME', 'ACEITA_TERMOS_USO', 'DATA_NASCIMENTO', 'LOGIN', 'SENHA'], 'required'],
-            //[['ACEITA_TERMOS_USO'], 'integer', 'min' => 1],
             [['ACEITA_TERMOS_USO'], 'compare', 'compareValue' => true, 'message' => 'Obrigatório aceitar os Termos de Uso.' ],
             [['DATA_NASCIMENTO'], 'safe'],
             [['OBSERVACAO'], 'string'],
@@ -46,6 +45,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             [['APELIDO'], 'string', 'max' => 20],
             [['LOGIN', 'SENHA'], 'string', 'max' => 15],
             [['CELULAR'], 'string', 'max' => 12],
+            [['LOGIN'], 'unique'],
         ];
     }
 
@@ -64,7 +64,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'SENHA' => 'Senha',
             'FACEBOOK' => 'Facebook',
             'CELULAR' => 'Celular',
-            'OBSERVACAO' => 'Observacao',
+            'OBSERVACAO' => 'Observações',
         ];
     }
 
