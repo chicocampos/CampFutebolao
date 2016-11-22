@@ -19,7 +19,7 @@ class TimesSearch extends Times
     {
         return [
             [['ID', 'CAMPEONATOS_ID'], 'integer'],
-            [['NOME', 'APELIDO'], 'safe'],
+            [['NOME', 'APELIDO', 'SIGLA'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class TimesSearch extends Times
         ]);
 
         $query->andFilterWhere(['like', 'NOME', $this->NOME])
-            ->andFilterWhere(['like', 'APELIDO', $this->APELIDO]);
+            ->andFilterWhere(['like', 'APELIDO', $this->APELIDO])
+            ->andFilterWhere(['like', 'SIGLA', $this->SIGLA]);
 
         return $dataProvider;
     }

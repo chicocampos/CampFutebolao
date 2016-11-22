@@ -129,7 +129,7 @@ class SalasController extends Controller
         if (($model = Salas::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('Página não encontrada.');
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

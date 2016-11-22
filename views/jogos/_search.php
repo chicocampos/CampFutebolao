@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\Times;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\JogosSearch */
@@ -15,23 +18,37 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ID') ?>
+    <?php // $form->field($model, 'ID') ?>
 
     <?= $form->field($model, 'RODADA') ?>
 
     <?= $form->field($model, 'DATA_HORA') ?>
 
-    <?= $form->field($model, 'GOLS_CASA') ?>
+    <?php // $form->field($model, 'GOLS_CASA') ?>
 
-    <?= $form->field($model, 'GOLS_VISITANTE') ?>
+    <?php // $form->field($model, 'GOLS_VISITANTE') ?>
 
-    <?php // echo $form->field($model, 'TIME_CASA_ID') ?>
+    <?= $form->field($model, 'TIME_CASA_ID')->widget(Select2::classname(), [
+	    'data' => ArrayHelper::map(Times::find()->all(),'ID', 'APELIDO'),
+	    'language' => 'pt',
+	    'options' => ['placeholder' => 'Selecione o Time da Casa'],
+	    'pluginOptions' => [
+	        'allowClear' => true
+	    ],
+	]); ?>
 
-    <?php // echo $form->field($model, 'TIME_VISITANTE_ID') ?>
+    <?= $form->field($model, 'TIME_VISITANTE_ID')->widget(Select2::classname(), [
+	    'data' => ArrayHelper::map(Times::find()->all(),'ID', 'APELIDO'),
+	    'language' => 'pt',
+	    'options' => ['placeholder' => 'Selecione o Time Visitante'],
+	    'pluginOptions' => [
+	        'allowClear' => true
+	    ],
+	]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
+        <?php // Html::resetButton('Reset', ['class' => 'btn btn-default']) ?> <!-- Este botão não está fazendo merda nenhuma -->
     </div>
 
     <?php ActiveForm::end(); ?>

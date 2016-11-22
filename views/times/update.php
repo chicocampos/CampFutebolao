@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Times */
 
-$this->title = 'Atualizar Time: ' . $model->ID;
+$this->title = 'Atualizar Time: ' . $model->APELIDO;
 $this->params['breadcrumbs'][] = ['label' => 'Times', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ID, 'url' => ['view', 'id' => $model->ID]];
 $this->params['breadcrumbs'][] = 'Update';

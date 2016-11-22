@@ -43,10 +43,10 @@ AppAsset::register($this);
             ['label' => 'Jogos_Sala', 'url' => ['/jogossala/index']],
             ['label' => 'Salas', 'url' => ['/salas/index']],
             ['label' => 'Participantes', 'url' => ['/participantes/index']],
-            ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
+            ['label' => 'Usuários', 'url' => ['/usuarios/index']],
             ['label' => 'Apostas', 'url' => ['/apostas/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Sobre', 'url' => ['/site/about']],
+            ['label' => 'Contato', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

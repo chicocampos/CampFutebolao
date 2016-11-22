@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Salas */
 
-$this->title = 'Sala: ' . $model->ID;
+$this->title = 'Sala: ' . $model->NOME;
 $this->params['breadcrumbs'][] = ['label' => 'Salas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'ACERTO_RESULTADO',
             'ACERTO_TIME_CASA:datetime',
             'ACERTO_TIME_VISITANTE:datetime',
-            'ACERTO_DEFERENCA',
+            'ACERTO_DIFERENCA',
         ],
     ]) ?>
 

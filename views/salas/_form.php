@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ACERTO_TIME_VISITANTE')->textInput() ?>
 
-    <?= $form->field($model, 'ACERTO_DEFERENCA')->textInput() ?>
+    <?= $form->field($model, 'ACERTO_DIFERENCA')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Confirmar' : 'Alterar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

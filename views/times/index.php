@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'NOME',
             'APELIDO',
             'CAMPEONATOS_ID',
+            'SIGLA',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

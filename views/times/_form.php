@@ -18,6 +18,8 @@ use app\models\Campeonatos;
 
     <?= $form->field($model, 'APELIDO')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'SIGLA')->textInput(['maxlength' => true]) ?>
+    
     <?= $form->field($model, 'CAMPEONATOS_ID')->dropDownList(
     	ArrayHelper::map(Campeonatos::find()->all(), 'ID', 'DIVISAO', 'NOME'),
     	['prompt'=>'Selecione o Campeonato']

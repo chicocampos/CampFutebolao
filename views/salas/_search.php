@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'ACERTO_TIME_VISITANTE') ?>
 
-    <?php // echo $form->field($model, 'ACERTO_DEFERENCA') ?>
+    <?php // echo $form->field($model, 'ACERTO_DIFERENCA') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

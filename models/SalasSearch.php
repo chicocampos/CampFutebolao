@@ -18,7 +18,7 @@ class SalasSearch extends Salas
     public function rules()
     {
         return [
-            [['ID', 'ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DEFERENCA'], 'integer'],
+            [['ID', 'ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DIFERENCA'], 'integer'],
             [['NOME', 'OBSERVACAO'], 'safe'],
             [['VALOR_ENTRADA'], 'number'],
         ];
@@ -65,7 +65,7 @@ class SalasSearch extends Salas
             'ACERTO_RESULTADO' => $this->ACERTO_RESULTADO,
             'ACERTO_TIME_CASA' => $this->ACERTO_TIME_CASA,
             'ACERTO_TIME_VISITANTE' => $this->ACERTO_TIME_VISITANTE,
-            'ACERTO_DEFERENCA' => $this->ACERTO_DEFERENCA,
+            'ACERTO_DIFERENCA' => $this->ACERTO_DIFERENCA,
         ]);
 
         $query->andFilterWhere(['like', 'NOME', $this->NOME])

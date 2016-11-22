@@ -21,7 +21,7 @@ class TimesController extends Controller
     public function behaviors()
     {
         return [
-                        'access' => [
+            'access' => [
             'class' => AccessControl::className(),
             'only' => ['view', 'update', 'delete', 'index', 'create'],
             'rules' => [
@@ -129,7 +129,7 @@ class TimesController extends Controller
         if (($model = Times::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('Página não encontrada.');
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

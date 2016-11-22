@@ -14,7 +14,7 @@ use Yii;
  * @property integer $ACERTO_RESULTADO
  * @property integer $ACERTO_TIME_CASA
  * @property integer $ACERTO_TIME_VISITANTE
- * @property integer $ACERTO_DEFERENCA
+ * @property integer $ACERTO_DIFERENCA
  */
 class Salas extends \yii\db\ActiveRecord
 {
@@ -35,7 +35,7 @@ class Salas extends \yii\db\ActiveRecord
             [['NOME', 'VALOR_ENTRADA'], 'required'],
             [['VALOR_ENTRADA'], 'number'],
             [['OBSERVACAO'], 'string'],
-            [['ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DEFERENCA'], 'integer'],
+            [['ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DIFERENCA'], 'integer'],
             [['NOME'], 'string', 'max' => 50],
         ];
     }
@@ -48,12 +48,12 @@ class Salas extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'NOME' => 'Nome',
-            'VALOR_ENTRADA' => 'Valor  Entrada',
-            'OBSERVACAO' => 'Observacao',
-            'ACERTO_RESULTADO' => 'Acerto  Resultado',
-            'ACERTO_TIME_CASA' => 'Acerto  Time  Casa',
-            'ACERTO_TIME_VISITANTE' => 'Acerto  Time  Visitante',
-            'ACERTO_DEFERENCA' => 'Acerto  Deferenca',
+            'VALOR_ENTRADA' => 'Valor de Entrada',
+            'OBSERVACAO' => 'Observações',
+            'ACERTO_RESULTADO' => 'Placar Exato',
+            'ACERTO_TIME_CASA' => 'Placar da Casa',
+            'ACERTO_TIME_VISITANTE' => 'Placar do Visitante',
+            'ACERTO_DIFERENCA' => 'Diferença de Gols',
         ];
     }
 }

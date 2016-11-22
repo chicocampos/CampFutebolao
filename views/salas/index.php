@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'ACERTO_RESULTADO',
             // 'ACERTO_TIME_CASA:datetime',
             // 'ACERTO_TIME_VISITANTE:datetime',
-            // 'ACERTO_DEFERENCA',
+            // 'ACERTO_DIFERENCA',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
