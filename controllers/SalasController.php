@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use app\models\Participantes;
 
 /**
  * SalasController implements the CRUD actions for Salas model.
@@ -48,6 +49,8 @@ class SalasController extends Controller
     {
         $searchModel = new SalasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $dataProvider->query->where('exists (select 1 from participantes p where p.SALA_ID = salas.ID and p.usuario_ID = ' . Yii::$app->user->identity->ID . ')' );
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -64,6 +67,9 @@ class SalasController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            
+            'participa'=>Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
+        ->andWhere(['SALA_ID'=>$id])->one()
         ]);
     }
 
@@ -85,6 +91,31 @@ class SalasController extends Controller
         }
     }
 
+    public function actionJoin($id)
+    {
+        $participantes = Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
+        ->andWhere(['SALA_ID'=>$id])->one();
+        if(!$participantes)
+        {
+            $participantes = new Participantes();
+            $participantes->USUARIO_ID = Yii::$app->user->identity->ID;
+            $participantes->SALA_ID = $id;
+            $participantes->PONTUACAO = 0;
+            $participantes->save();
+        }
+        
+        $searchModel = new SalasSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $dataProvider->query->where('exists (select 1 from participantes p where p.SALA_ID = salas.ID and p.usuario_ID = ' . Yii::$app->user->identity->ID . ')' );
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+        
+    }
+    
     /**
      * Updates an existing Salas model.
      * If update is successful, the browser will be redirected to the 'view' page.

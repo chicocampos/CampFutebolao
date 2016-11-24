@@ -34,7 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'ACERTO_TIME_VISITANTE:datetime',
             // 'ACERTO_DIFERENCA',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {delete} {update}',
+                'buttons' => [
+                    'update' => function ($url, $model){
+                        return $model->ADMINISTRADOR == Yii::$app->user->identity->ID ?
+                        Html::a('<span class="glyphicon glyphicon-pencil"></span>',$url,['title'=>Yii::t('yii','update'),]) : '';
+                    },
+                    'delete' => function ($url, $model){
+                        return $model->ADMINISTRADOR == Yii::$app->user->identity->ID ?
+                        Html::a('<span class="glyphicon glyphicon-trash"></span>',$url,['title'=>Yii::t('yii','delete'),]) : '';
+                    }
+                ]
+            ],
         ],
     ]); ?>
 </div>

@@ -15,14 +15,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Alterar', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Excluir', ['delete', 'id' => $model->ID], [
+        <?= $model->ADMINISTRADOR == Yii::$app->user->identity->ID ? Html::a('Alterar', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) : '';?>
+        <?= $model->ADMINISTRADOR == Yii::$app->user->identity->ID ? Html::a('Excluir', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Confirma a exclusão deste item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) : '';?>
+        <?= $participa ? '' : Html::a('Participar', ['join', 'id' => $model->ID], ['class' => 'btn btn-primary']); ?>
     </p>
 
     <?= DetailView::widget([
@@ -33,8 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'VALOR_ENTRADA',
             'OBSERVACAO:ntext',
             'ACERTO_RESULTADO',
-            'ACERTO_TIME_CASA:datetime',
-            'ACERTO_TIME_VISITANTE:datetime',
+            'ACERTO_TIME_CASA',
+            'ACERTO_TIME_VISITANTE',
             'ACERTO_DIFERENCA',
         ],
     ]) ?>
