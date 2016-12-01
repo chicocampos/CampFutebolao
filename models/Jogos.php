@@ -54,4 +54,9 @@ class Jogos extends \yii\db\ActiveRecord
             'TIME_VISITANTE_ID' => 'Time Visitante',
         ];
     }
+    
+    public function getApresentacao(){
+        return Times::find()->where(['ID' => $this->TIME_CASA_ID])->one()->APELIDO . 
+             ' x ' . Times::find()->where(['ID' => $this->TIME_VISITANTE_ID])->one()->APELIDO;
+    }
 }

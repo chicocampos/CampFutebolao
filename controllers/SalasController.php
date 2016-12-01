@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Salas;
+use app\models\JogosSala;
 use app\models\SalasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -68,6 +69,8 @@ class SalasController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             
+            //'jogos' => Jogos::find()->
+            
             'participa'=>Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
         ->andWhere(['SALA_ID'=>$id])->one()
         ]);
@@ -81,19 +84,37 @@ class SalasController extends Controller
     public function actionCreate()
     {
         $model = new Salas();
+        $jogos = new JogosSala();
+       // $jogossala = new JogosSala();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//        if (($model->load(Yii::$app->request->post())) && (($model->save())) && ($jogossala->load(Yii::$app->request->post())))
+//        {
+//            return $this->redirect(['view', 'id' => $model->ID]);
+//        }
+        
+        if (($model->load(Yii::$app->request->post())) && ($jogossala->load(Yii::$app->request->post())))
+        {
+            $model->save();
+            
+            $jogossala->SALA_ID = $model->ID;
+            $jogossala->JOGO_ID = $jogossala->ID;
+        
+            $jogossala->save();
+            
             return $this->redirect(['view', 'id' => $model->ID]);
-        } else {
+        }
+        else {
             return $this->render('create', [
                 'model' => $model,
+                'jogos' => $jogos,
+                //'jogossala' => $jogossala,
             ]);
         }
     }
 
     public function actionJoin($id)
     {
-        $participantes = Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
+        $participantes = Participantes::find()->where(['USUARIO_ID'=>Yii::$app->user->identity->ID])
         ->andWhere(['SALA_ID'=>$id])->one();
         if(!$participantes)
         {
@@ -126,11 +147,16 @@ class SalasController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (($model->load(Yii::$app->request->post())) && ($jogossala->load(Yii::$app->request->post())))
+        {
+            $model->save();
+            $jogossala->save();
+                
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+               // 'jogossala' => (empty($jogossala)) ? new JogosSala() : $jogossala
             ]);
         }
     }
@@ -160,7 +186,7 @@ class SalasController extends Controller
         if (($model = Salas::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('A página solicitada não foi encontrada.');
         }
     }
 }

@@ -40,7 +40,7 @@ AppAsset::register($this);
             ['label' => 'Campeonatos', 'url' => ['/campeonatos/index']],
             ['label' => 'Times', 'url' => ['/times/index']],
             ['label' => 'Jogos', 'url' => ['/jogos/index']],
-            ['label' => 'Jogos_Sala', 'url' => ['/jogossala/index']],
+            ['label' => 'Jogos-Sala', 'url' => ['/jogos-sala/index']],
             ['label' => 'Salas', 'url' => ['/salas/index']],
             ['label' => 'Participantes', 'url' => ['/participantes/index']],
             ['label' => 'Usuários', 'url' => ['/usuarios/index']],

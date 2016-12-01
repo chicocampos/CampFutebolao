@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
+use app\models\JogosSala;
+use app\models\Times;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Salas */
@@ -38,6 +41,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'ACERTO_TIME_VISITANTE',
             'ACERTO_DIFERENCA',
         ],
-    ]) ?>
+    ]);
+    $i = 1;
+    foreach($model->jogos as $jogo) :
+    $jogoSala = JogosSala::find()->where(['SALA_ID'=>$model->ID])->andWhere(['JOGO_ID' => $jogo->ID])->one();
+        echo 'jogo '.$i.': '. $jogo->apresentacao .
+             ' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate&ID=1&JOGO_SALA_ID='.$jogoSala->ID.'">APOSTAR </a>';
+        echo "<br>";
+        $i++;
+    endforeach;
+    /*ListView::widget([
+        'dataProvider' => $model->jogos,
+        'itemOptions' => ['class' => 'item'],
+        'itemView' => function ($model, $key, $index, $widget)
+        {
+            return $model->TIME_CASA . ' x ' . $model->TIME_VISITANTE;
+        }
+    ])*/?>
 
 </div>

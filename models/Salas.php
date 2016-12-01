@@ -76,4 +76,10 @@ class Salas extends \yii\db\ActiveRecord
         
         return true;
     }
+    
+    public function getJogos()
+    {
+        return $this->hasMany(Jogos::className(), ['ID' => 'JOGO_ID'])
+            ->viaTable('jogossala', ['SALA_ID' => 'ID']);
+    }
 }

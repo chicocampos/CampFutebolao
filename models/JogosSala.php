@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "jogos_sala".
+ * This is the model class for table "jogossala".
  *
  * @property integer $ID
  * @property integer $SALA_ID
@@ -18,7 +18,7 @@ class JogosSala extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'jogos_sala';
+        return 'jogossala';
     }
 
     /**
@@ -27,7 +27,8 @@ class JogosSala extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['SALA_ID', 'JOGO_ID'], 'required'],
+            //[['SALA_ID', 'JOGO_ID'], 'required'],
+            [['JOGO_ID'], 'required'],
             [['SALA_ID', 'JOGO_ID'], 'integer'],
             [['JOGO_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Jogos::className(), 'targetAttribute' => ['JOGO_ID' => 'ID']],
             [['SALA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Salas::className(), 'targetAttribute' => ['SALA_ID' => 'ID']],
