@@ -92,14 +92,14 @@ class SalasController extends Controller
 //            return $this->redirect(['view', 'id' => $model->ID]);
 //        }
         
-        if (($model->load(Yii::$app->request->post())) && ($jogossala->load(Yii::$app->request->post())))
+        if (($model->load(Yii::$app->request->post())) && ($jogos->load(Yii::$app->request->post())))
         {
             $model->save();
             
-            $jogossala->SALA_ID = $model->ID;
-            $jogossala->JOGO_ID = $jogossala->ID;
+            $jogos->SALA_ID = $model->ID;
+            $jogos->JOGO_ID = $jogos->ID;
         
-            $jogossala->save();
+            $jogos->save();
             
             return $this->redirect(['view', 'id' => $model->ID]);
         }

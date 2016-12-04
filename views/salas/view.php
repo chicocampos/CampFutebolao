@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'ID',
+            //'ID',
             'NOME',
             'VALOR_ENTRADA',
             'OBSERVACAO:ntext',
@@ -42,21 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'ACERTO_DIFERENCA',
         ],
     ]);
-    $i = 1;
-    foreach($model->jogos as $jogo) :
-    $jogoSala = JogosSala::find()->where(['SALA_ID'=>$model->ID])->andWhere(['JOGO_ID' => $jogo->ID])->one();
-        echo 'jogo '.$i.': '. $jogo->apresentacao .
-             ' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate&ID=1&JOGO_SALA_ID='.$jogoSala->ID.'">APOSTAR </a>';
-        echo "<br>";
-        $i++;
-    endforeach;
-    /*ListView::widget([
-        'dataProvider' => $model->jogos,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget)
-        {
-            return $model->TIME_CASA . ' x ' . $model->TIME_VISITANTE;
-        }
-    ])*/?>
+        $i = 1;
+        foreach($model->jogos as $jogo) :
+        $jogoSala = JogosSala::find()->where(['SALA_ID'=>$model->ID])->andWhere(['JOGO_ID' => $jogo->ID])->one();
+            echo 'Jogo '.$i.': '. $jogo->apresentacao .
+                //' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate">APOSTAR</a>';
+                ' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate&JOGO_SALA_ID='.$jogoSala->ID.'">APOSTAR </a>';
+                //' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate&ID='.Yii::$app->user->identity->ID.'&JOGO_SALA_ID='.$jogoSala->ID.'">APOSTAR </a>';
+            echo "<br>";
+            $i++;
+        endforeach;
+
+    ?>
 
 </div>

@@ -29,6 +29,14 @@ use kartik\datecontrol\DateControl;
     <?= $form->field($model, 'FACEBOOK')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'OBSERVACAO')->textarea(['rows' => 6]) ?>
+    
+    <?= $form->textarea(['rows' => 6]) ?>
+    
+    <textarea  name="downloadSourceCode" id="downloadSourceCode">Termos e condiçoes de uso!
+    
+    
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt officiis cum soluta alias perferendis accusantium ipsam ad ut a eos inventore laudantium, dicta illum, explicabo debitis impedit animi consectetur aspernatur.
+    </textarea>
 
     <?= $form->field($model, 'ACEITA_TERMOS_USO')->checkbox(['1'=>'Aceito']) ?>
 

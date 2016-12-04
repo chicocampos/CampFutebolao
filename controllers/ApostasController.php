@@ -21,7 +21,7 @@ class ApostasController extends Controller
     public function behaviors()
     {
         return [
-                                    'access' => [
+            'access' => [
             'class' => AccessControl::className(),
             'only' => ['view', 'update', 'delete', 'index', 'create'],
             'rules' => [
