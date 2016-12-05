@@ -4,6 +4,10 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Jogos;
+use app\models\JogosSala;
+use app\models\Salas;
+use app\models\Participantes;
+use app\models\Apostas;
 use app\models\JogosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,11 +27,18 @@ class JogosController extends Controller
         return [
             'access' => [
             'class' => AccessControl::className(),
-            'only' => ['view', 'update', 'delete', 'index', 'create'],
+            'only' => ['view'],
             'rules' => [
                 [
                     'allow' => true,
-                    'roles' => ['@']
+                    'roles' => ['?', '@']
+                ],
+            ],
+            'only' => ['create', 'update', 'delete'],
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['superadmin']
                 ],
             ]
         ],
@@ -100,6 +111,7 @@ class JogosController extends Controller
         $model = $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->actionPlacar($model);
             return $this->redirect(['view', 'ID' => $model->ID, 'TIME_CASA_ID' => $model->TIME_CASA_ID, 'TIME_VISITANTE_ID' => $model->TIME_VISITANTE_ID]);
         } else {
             return $this->render('update', [
@@ -139,5 +151,47 @@ class JogosController extends Controller
         } else {
             throw new NotFoundHttpException('Página não encontrada.');
         }
+    }
+    
+    public function actionPlacar($jogo){
+        if($jogo->REGISTRADO) return;
+        
+        $jogossalas = JogosSala::find()->where(["JOGO_ID"=>$jogo->ID])->all();
+        foreach($jogossalas as $jogosala){
+            $sala = Salas::find()->where(["ID"=>$jogosala->SALA_ID])->one();
+            
+            $participantes = Participantes::find()->where(["SALA_ID"=>$sala->ID])->all();
+            
+            foreach($participantes as $participante){
+                $aposta = Apostas::find()->where(["JOGO_SALA_ID"=>$jogosala->ID])->andWhere(["USUARIO_ID"=>$participante->USUARIO_ID])->one();
+                
+                if(!$aposta) continue;
+                
+                //Acerto de Diferença
+                if(($aposta->RESULTADO_CASA - $aposta->RESULTADO_VISITANTE) == ($jogo->GOLS_CASA - $jogo->GOLS_VISITANTE)){
+                    $participante->PONTUACAO += $sala->ACERTO_DIFERENCA;
+                }
+                
+                //Acerto Time Casa
+                if($aposta->RESULTADO_CASA == $jogo->GOLS_CASA){
+                    $participante->PONTUACAO += $sala->ACERTO_TIME_CASA;
+                }
+                
+                if($aposta->RESULTADO_VISITANTE == $jogo->GOLS_VISITANTE){
+                    $participante->PONTUACAO += $sala->ACERTO_TIME_VISITANTE;
+                }
+                
+                //Acerto de Quem ganhou
+                if( (($jogo->GOLS_CASA > $jogo->GOLS_VISITANTE) && ($aposta->RESULTADO_CASA > $aposta->RESULTADO_VISITANTE))
+                  ||(($jogo->GOLS_CASA < $jogo->GOLS_VISITANTE) && ($aposta->RESULTADO_CASA < $aposta->RESULTADO_VISITANTE))
+                  ||(($jogo->GOLS_CASA == $jogo->GOLS_VISITANTE) && ($aposta->RESULTADO_CASA == $aposta->RESULTADO_VISITANTE))
+                  ){
+                    $participante->PONTUACAO += $sala->ACERTO_RESULTADO;
+                }
+                $participante->save();
+            }
+        }
+        $jogo->REGISTRADO = true;
+        $jogo->save();
     }
 }

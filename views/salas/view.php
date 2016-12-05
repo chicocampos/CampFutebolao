@@ -46,9 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
         foreach($model->jogos as $jogo) :
         $jogoSala = JogosSala::find()->where(['SALA_ID'=>$model->ID])->andWhere(['JOGO_ID' => $jogo->ID])->one();
             echo 'Jogo '.$i.': '. $jogo->apresentacao .
-                //' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate">APOSTAR</a>';
                 ' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate&JOGO_SALA_ID='.$jogoSala->ID.'">APOSTAR </a>';
-                //' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate&ID='.Yii::$app->user->identity->ID.'&JOGO_SALA_ID='.$jogoSala->ID.'">APOSTAR </a>';
             echo "<br>";
             $i++;
         endforeach;

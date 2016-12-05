@@ -33,11 +33,12 @@ class Salas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['NOME', 'VALOR_ENTRADA', 'ADMINISTRADOR'], 'required'],
+            [['NOME', 'VALOR_ENTRADA'], 'required'],
             [['VALOR_ENTRADA'], 'number'],
             [['OBSERVACAO'], 'string'],
             [['ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DIFERENCA', 'ADMINISTRADOR'], 'integer'],
             [['NOME'], 'string', 'max' => 50],
+            [['TESTE'],'safe']
         ];
     }
 
@@ -56,24 +57,13 @@ class Salas extends \yii\db\ActiveRecord
             'ACERTO_TIME_VISITANTE' => 'Placar do Visitante',
             'ACERTO_DIFERENCA' => 'Diferença de Gols',
             'ADMINISTRADOR' => 'Administrador',
+            'JOGOS' => 'Jogos',
         ];
     }
     
     public function beforeSave($insert)
     {
         $this->ADMINISTRADOR = Yii::$app->user->identity->ID;
-        
-        $participantes = Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
-        ->andWhere(['SALA_ID'=>$this->ID])->one();
-        if(!$participantes)
-        {
-            $participantes = new Participantes();
-            $participantes->USUARIO_ID = Yii::$app->user->identity->ID;
-            $participantes->SALA_ID = $this->ID;
-            $participantes->PONTUACAO = 0;
-            $participantes->save();
-        }
-        
         return true;
     }
     

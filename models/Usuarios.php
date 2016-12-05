@@ -3,9 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\web\IdentityInterface;
-use yii\db\ActiveRecord;
-
 
 /**
  * This is the model class for table "usuarios".
@@ -17,9 +14,8 @@ use yii\db\ActiveRecord;
  * @property string $DATA_NASCIMENTO
  * @property string $LOGIN
  * @property string $SENHA
- * @property string $FACEBOOK
- * @property string $CELULAR
  * @property string $OBSERVACAO
+ * @property integer $SUPERADMIN
  */
 class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -38,13 +34,13 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
         return [
             [['NOME', 'ACEITA_TERMOS_USO', 'DATA_NASCIMENTO', 'LOGIN', 'SENHA'], 'required'],
+            [['ACEITA_TERMOS_USO', 'SUPERADMIN'], 'integer'],
             [['ACEITA_TERMOS_USO'], 'compare', 'compareValue' => true, 'message' => 'Obrigatório aceitar os Termos de Uso.' ],
             [['DATA_NASCIMENTO'], 'safe'],
             [['OBSERVACAO'], 'string'],
-            [['NOME', 'FACEBOOK'], 'string', 'max' => 50],
+            [['NOME'], 'string', 'max' => 50],
             [['APELIDO'], 'string', 'max' => 20],
             [['LOGIN', 'SENHA'], 'string', 'max' => 15],
-            [['CELULAR'], 'string', 'max' => 12],
             [['LOGIN'], 'unique'],
         ];
     }
@@ -62,16 +58,13 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             'DATA_NASCIMENTO' => 'Data de Nascimento',
             'LOGIN' => 'Login',
             'SENHA' => 'Senha',
-            'FACEBOOK' => 'Facebook',
-            'CELULAR' => 'Celular',
             'OBSERVACAO' => 'Observações',
+            'SUPERADMIN' => 'Superadmin',
         ];
     }
-
+    
     public static function findIdentity($id)
 	{   	 
-    	//return static::findOne($id);
-
     	$user = Usuarios::findOne($id);
         if (count($user))
         {
@@ -80,7 +73,7 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return null;
 	}
     
-	public static function findIdentityByAccessToken($token, $type = null)
+    public static function findIdentityByAccessToken($token, $type = null)
 	{
 	}
     
@@ -113,4 +106,9 @@ class Usuarios extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 	{
 		return $this->SENHA === $password;
 	}
+    
+    public static function isSuperAdmin()
+    {
+        return !Yii::$app->user->isGuest && Yii::$app->user->identity->user_type == self::USER_TYPE_SUPER_ADMIN;
+    }
 }

@@ -29,10 +29,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'SENHA') ?>
 
-    <?php // echo $form->field($model, 'FACEBOOK') ?>
-
-    <?php // echo $form->field($model, 'CELULAR') ?>
-
     <?php // echo $form->field($model, 'OBSERVACAO') ?>
 
     <div class="form-group">

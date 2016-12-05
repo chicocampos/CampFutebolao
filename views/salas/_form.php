@@ -36,7 +36,7 @@ use kartik\select2\Select2;
     
     
     <?= 
-        $form->field($jogos, 'ID')->widget(Select2::classname(), [
+        $form->field($model, 'jogos')->widget(Select2::classname(), [
 	    'data' => ArrayHelper::map(Jogos::find()->all(),'ID', 'Apresentacao'),
 	    'options' => ['placeholder' => 'Selecione o Jogo', 'multiple' => true],
 	    'pluginOptions' => [

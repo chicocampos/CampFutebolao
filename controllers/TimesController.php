@@ -27,7 +27,7 @@ class TimesController extends Controller
             'rules' => [
                 [
                     'allow' => true,
-                    'roles' => ['@']
+                    'roles' => ['superadmin']
                 ],
             ]
         ],

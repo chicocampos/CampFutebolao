@@ -35,7 +35,7 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
+        /*'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Campeonatos', 'url' => ['/campeonatos/index']],
             ['label' => 'Times', 'url' => ['/times/index']],
@@ -53,13 +53,40 @@ AppAsset::register($this);
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->LOGIN . ')',
+                    'Logout (' . Yii::$app->user->identity->NOME . ')',
+                    ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
+            )
+        ],*/
+        
+        'items' => [
+            ['label' => 'Home', 'url' => ['/site/index'], 'visible' => true],
+            ['label' => 'Campeonatos', 'url' => ['/campeonatos/index'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->SUPERADMIN == 1],
+            ['label' => 'Times', 'url' => ['/times/index'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->SUPERADMIN == 1],
+            ['label' => 'Jogos', 'url' => ['/jogos/index'], 'visible' => true],
+            //['label' => 'Jogos-Sala', 'url' => ['/jogos-sala/index'], 'visible' => Yii::$app->user->identity],
+            ['label' => 'Salas', 'url' => ['/salas/index'], 'visible' => !Yii::$app->user->isGuest],
+            //['label' => 'Participantes', 'url' => ['/participantes/index']],
+            ['label' => 'Usuários', 'url' => ['/usuarios/index'], 'visible' => true],
+            ['label' => 'Apostas', 'url' => ['/apostas/index'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'Sobre', 'url' => ['/site/about'], 'visible' => true],
+            ['label' => 'Contato', 'url' => ['/site/contact'], 'visible' => true],
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Login', 'url' => ['/site/login']]
+            ) : (
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post')
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->NOME . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
                 . '</li>'
             )
         ],
+        
     ]);
     NavBar::end();
     ?>

@@ -35,8 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'DATA_NASCIMENTO',
             'LOGIN',
             'SENHA',
-            'FACEBOOK',
-            'CELULAR',
             'OBSERVACAO:ntext',
         ],
     ]) ?>

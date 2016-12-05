@@ -23,11 +23,18 @@ class UsuariosController extends Controller
         return [
             'access' => [
             'class' => AccessControl::className(),
-            'only' => ['view', 'update', 'delete', 'index'],
+            'only' => ['create', 'update'],
             'rules' => [
                 [
                     'allow' => true,
-                    'roles' => ['@']
+                    'roles' => ['?', '@']
+                ],
+            ],
+            'only' => ['index'],
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['superadmin']
                 ],
             ]
         ],

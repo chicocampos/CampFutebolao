@@ -19,7 +19,7 @@ class UsuariosSearch extends Usuarios
     {
         return [
             [['ID', 'ACEITA_TERMOS_USO'], 'integer'],
-            [['NOME', 'APELIDO', 'DATA_NASCIMENTO', 'LOGIN', 'SENHA', 'FACEBOOK', 'CELULAR', 'OBSERVACAO'], 'safe'],
+            [['NOME', 'APELIDO', 'DATA_NASCIMENTO', 'LOGIN', 'SENHA', 'OBSERVACAO'], 'safe'],
         ];
     }
 
@@ -68,8 +68,6 @@ class UsuariosSearch extends Usuarios
             ->andFilterWhere(['like', 'APELIDO', $this->APELIDO])
             ->andFilterWhere(['like', 'LOGIN', $this->LOGIN])
             ->andFilterWhere(['like', 'SENHA', $this->SENHA])
-            ->andFilterWhere(['like', 'FACEBOOK', $this->FACEBOOK])
-            ->andFilterWhere(['like', 'CELULAR', $this->CELULAR])
             ->andFilterWhere(['like', 'OBSERVACAO', $this->OBSERVACAO]);
 
         return $dataProvider;

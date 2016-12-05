@@ -33,8 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'DATA_HORA',
             'GOLS_CASA',
             'GOLS_VISITANTE',
-            'TIME_CASA_ID:datetime',
-            'TIME_VISITANTE_ID:datetime',
+            'TIME_CASA_ID',
+            'TIME_VISITANTE_ID',
         ],
     ]) ?>
 

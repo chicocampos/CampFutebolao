@@ -84,29 +84,37 @@ class SalasController extends Controller
     public function actionCreate()
     {
         $model = new Salas();
-        $jogos = new JogosSala();
-       // $jogossala = new JogosSala();
 
-//        if (($model->load(Yii::$app->request->post())) && (($model->save())) && ($jogossala->load(Yii::$app->request->post())))
-//        {
-//            return $this->redirect(['view', 'id' => $model->ID]);
-//        }
-        
-        if (($model->load(Yii::$app->request->post())) && ($jogos->load(Yii::$app->request->post())))
-        {
-            $model->save();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $jogos = Yii::$app->request->post()['Salas']['jogos'];
+            //var_dump($jogos);
+            foreach($jogos as $id){
+                $jogoSala = new JogosSala();
+                $jogoSala->JOGO_ID = $id;
+                $jogoSala->SALA_ID = $model->ID;
+                $jogoSala->save();
+            }
+            $participantes = Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
+            ->andWhere(['SALA_ID'=>$model->ID])->one();
+            if(!$participantes)
+            {
+                $participantes = new Participantes();
+                $participantes->USUARIO_ID = Yii::$app->user->identity->ID;
+                $participantes->SALA_ID = $model->ID;
+                $participantes->PONTUACAO = 0;
+                $participantes->save();
+            }            
+            /*
+            foreach($model->jogos as $jogo){
+                
+            }*/
             
-            $jogos->SALA_ID = $model->ID;
-            $jogos->JOGO_ID = $jogos->ID;
-        
-            $jogos->save();
-            
-            return $this->redirect(['view', 'id' => $model->ID]);
+            return $this->redirect(['view', 'ID' => $model->ID]);
         }
         else {
             return $this->render('create', [
                 'model' => $model,
-                'jogos' => $jogos,
+                //'jogos' => $jogos,
                 //'jogossala' => $jogossala,
             ]);
         }
@@ -146,12 +154,27 @@ class SalasController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if (($model->load(Yii::$app->request->post())) && ($jogossala->load(Yii::$app->request->post())))
-        {
-            $model->save();
-            $jogossala->save();
-                
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $jogos = Yii::$app->request->post()['Salas']['jogos'];
+            foreach($jogos as $id){
+                $jogoSala = new JogosSala();
+                $jogoSala->JOGO_ID = $id;
+                $jogoSala->SALA_ID = $model->ID;
+                $jogoSala->save();
+            }
+            
+            $participantes = Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
+            ->andWhere(['SALA_ID'=>$model->ID])->one();
+            if(!$participantes)
+            {
+                $participantes = new Participantes();
+                $participantes->USUARIO_ID = Yii::$app->user->identity->ID;
+                $participantes->SALA_ID = $model->ID;
+                $participantes->PONTUACAO = 0;
+                $participantes->save();
+            } 
+            
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [

@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'VALOR_ENTRADA',
             'OBSERVACAO:ntext',
             'ACERTO_RESULTADO',
-            // 'ACERTO_TIME_CASA:datetime',
-            // 'ACERTO_TIME_VISITANTE:datetime',
-            // 'ACERTO_DIFERENCA',
+            'ACERTO_TIME_CASA',
+            'ACERTO_TIME_VISITANTE',
+            'ACERTO_DIFERENCA',
 
             [
                 'class' => 'yii\grid\ActionColumn',

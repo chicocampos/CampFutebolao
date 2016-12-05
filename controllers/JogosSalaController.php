@@ -178,7 +178,7 @@ class JogosSalaController extends Controller
         if (($model = JogosSala::findOne(['ID' => $ID, 'SALA_ID' => $SALA_ID, 'JOGO_ID' => $JOGO_ID])) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Página não encontrada.');
         }
     }
 }
