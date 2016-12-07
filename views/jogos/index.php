@@ -25,9 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID',
+            //'ID',
             'RODADA',
-            'DATA_HORA',
+            [
+                'attribute' => 'DATA_HORA',
+                'format' => ['datetime', 'php:d/m/Y - H:i']
+            ],     
+            //'DATA_HORA',
             'GOLS_CASA',
             'GOLS_VISITANTE',
             // 'TIME_CASA_ID',

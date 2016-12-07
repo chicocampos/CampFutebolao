@@ -69,10 +69,10 @@ AppAsset::register($this);
             //['label' => 'Jogos-Sala', 'url' => ['/jogos-sala/index'], 'visible' => Yii::$app->user->identity],
             ['label' => 'Salas', 'url' => ['/salas/index'], 'visible' => !Yii::$app->user->isGuest],
             //['label' => 'Participantes', 'url' => ['/participantes/index']],
-            ['label' => 'Usuários', 'url' => ['/usuarios/index'], 'visible' => true],
-            ['label' => 'Apostas', 'url' => ['/apostas/index'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'Usuários', 'url' => ['/usuarios/index'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->SUPERADMIN == 1],
+            //['label' => 'Apostas', 'url' => ['/apostas/index'], 'visible' => !Yii::$app->user->isGuest],
             ['label' => 'Sobre', 'url' => ['/site/about'], 'visible' => true],
-            ['label' => 'Contato', 'url' => ['/site/contact'], 'visible' => true],
+            //['label' => 'Contato', 'url' => ['/site/contact'], 'visible' => true],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -92,9 +92,9 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
+        <?php /* Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        ])*/ ?>
         <?= $content ?>
     </div>
 </div>
@@ -102,8 +102,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; Campos <?= date('Y') ?></p>
-
-        <p class="pull-right"><?php //Yii::powered() ?></p>
     </div>
 </footer>
 
