@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * JogosController implements the CRUD actions for Jogos model.
@@ -25,7 +26,7 @@ class JogosController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
+            /*'access' => [
             'class' => AccessControl::className(),
             'only' => ['view'],
             'rules' => [
@@ -41,7 +42,7 @@ class JogosController extends Controller
                     'roles' => ['superadmin']
                 ],
             ]
-        ],
+        ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -87,14 +88,21 @@ class JogosController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Jogos();
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $model = new Jogos();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID' => $model->ID, 'TIME_CASA_ID' => $model->TIME_CASA_ID, 'TIME_VISITANTE_ID' => $model->TIME_VISITANTE_ID]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'ID' => $model->ID, 'TIME_CASA_ID' => $model->TIME_CASA_ID, 'TIME_VISITANTE_ID' => $model->TIME_VISITANTE_ID]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
         }
     }
 
@@ -108,15 +116,22 @@ class JogosController extends Controller
      */
     public function actionUpdate($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID)
     {
-        $model = $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID);
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $model = $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->actionPlacar($model);
-            return $this->redirect(['view', 'ID' => $model->ID, 'TIME_CASA_ID' => $model->TIME_CASA_ID, 'TIME_VISITANTE_ID' => $model->TIME_VISITANTE_ID]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $this->actionPlacar($model);
+                return $this->redirect(['view', 'ID' => $model->ID, 'TIME_CASA_ID' => $model->TIME_CASA_ID, 'TIME_VISITANTE_ID' => $model->TIME_VISITANTE_ID]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
         }
     }
 
@@ -130,9 +145,16 @@ class JogosController extends Controller
      */
     public function actionDelete($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID)
     {
-        $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID)->delete();
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+        }
     }
 
     /**

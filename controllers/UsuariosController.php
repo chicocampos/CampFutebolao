@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -21,7 +22,7 @@ class UsuariosController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
+            /*'access' => [
             'class' => AccessControl::className(),
             'only' => ['create', 'update'],
             'rules' => [
@@ -37,7 +38,7 @@ class UsuariosController extends Controller
                     'roles' => ['superadmin']
                 ],
             ]
-        ],
+        ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -53,13 +54,20 @@ class UsuariosController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UsuariosSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $searchModel = new UsuariosSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+        }
     }
 
     /**
@@ -86,9 +94,10 @@ class UsuariosController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            //return $this->render('create', [
+                //'model' => $model,
+            //]);
+            return $this->goHome();
         }
     }
 
@@ -100,14 +109,21 @@ class UsuariosController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
         }
     }
 
@@ -119,9 +135,16 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+        }
     }
 
     /**
