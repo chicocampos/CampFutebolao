@@ -44,16 +44,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {delete} {update}',
+                'template' => '{view} {update}',
                 'buttons' => [
                     'update' => function ($url, $model){
                         return $model->ADMINISTRADOR == Yii::$app->user->identity->ID ?
                         Html::a('<span class="glyphicon glyphicon-pencil"></span>',$url,['title'=>Yii::t('yii','update'),]) : '';
                     },
-                    'delete' => function ($url, $model){
-                        return $model->ADMINISTRADOR == Yii::$app->user->identity->ID ?
-                        Html::a('<span class="glyphicon glyphicon-trash"></span>',$url,['title'=>Yii::t('yii','delete'),]) : '';
-                    }
+//                    'delete' => function ($url, $model){
+//                        return $model->ADMINISTRADOR == Yii::$app->user->identity->ID ?
+//                        Html::a('<span class="glyphicon glyphicon-trash"></span>',$url,['title'=>Yii::t('yii','delete'),]) : '';
+//                    }
                 ]
             ],
         ],

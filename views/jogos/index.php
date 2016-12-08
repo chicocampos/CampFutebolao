@@ -27,16 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'ID',
             'RODADA',
+            //'DATA_HORA',
+            [
+                'label' => 'Times',
+                'value' => function ($model) {
+                    return $model->apresentacao;
+                }
+            ],
             [
                 'attribute' => 'DATA_HORA',
                 'format' => ['datetime', 'php:d/m/Y - H:i']
-            ],     
-            //'DATA_HORA',
+            ],  
             'GOLS_CASA',
             'GOLS_VISITANTE',
             // 'TIME_CASA_ID',
             // 'TIME_VISITANTE_ID',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

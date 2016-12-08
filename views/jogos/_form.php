@@ -40,7 +40,7 @@ use kartik\datecontrol\DateControl;
 
 	<?= $form->field($model, 'DATA_HORA')->widget(DateControl::className(), [
 	    'type' => DateControl::FORMAT_DATETIME,
-	    'displayFormat' => 'dd/MM/yyyy HH:mm',
+	    'displayFormat' => 'dd/MM/yyyy HH:i',
 	    'saveFormat' => 'php:Y-m-d H:i:s',
 	    //'options' => [
 	    //	'mask' => '99/99/9999'

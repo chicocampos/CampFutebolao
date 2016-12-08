@@ -146,16 +146,26 @@ class JogosController extends Controller
      */
     public function actionDelete($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID)
     {
-        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        $sala = JogosSala::findOne(['JOGO_ID'=>$ID]);
+        
+        if(!$sala)
         {
-            $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID)->delete();
+            if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+            {
+                $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID)->delete();
 
-            return $this->redirect(['index']);
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            }
         }
         else
         {
-            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            throw new ForbiddenHttpException('Este jogo não pode ser deletado, pois está cadastrado em alguma sala.');
         }
+        
     }
 
     /**

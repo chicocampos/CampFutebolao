@@ -4,11 +4,15 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Times;
+use app\models\Jogos;
 use app\models\TimesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
+
+
 
 /**
  * TimesController implements the CRUD actions for Times model.
@@ -140,15 +144,25 @@ class TimesController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        $time_visitante = Jogos::findOne(['TIME_VISITANTE_ID'=>$id]);
+        $time_casa = Jogos::findOne(['TIME_CASA_ID'=>$id]);
+        
+        if(!$time_visitante && !$time_casa)
         {
-            $this->findModel($id)->delete();
+            if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+            {
+                $this->findModel($id)->delete();
 
-            return $this->redirect(['index']);
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            }
         }
         else
         {
-            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            throw new ForbiddenHttpException('Este time não pode ser deletado, pois está cadastrado em alguma jogo.');
         }
     }
 

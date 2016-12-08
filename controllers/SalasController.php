@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\Participantes;
+use yii\web\ForbiddenHttpException;
 
 /**
  * SalasController implements the CRUD actions for Salas model.
@@ -195,9 +196,18 @@ class SalasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $sala = Apostas::findOne(['JOGO_SALA_ID'=>$id]);
+        
+        if(!$sala)
+        {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Esta sala não pode ser deletado, pois possui apostas');
+        }
     }
 
     /**

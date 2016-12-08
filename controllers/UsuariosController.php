@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Usuarios;
+use app\models\Participantes;
 use app\models\UsuariosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -135,15 +136,24 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        $usuario = Participantes::findOne(['USUARIO_ID'=>$id]);
+        
+        if(!$usuario)
         {
-            $this->findModel($id)->delete();
+            if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+            {
+                $this->findModel($id)->delete();
 
-            return $this->redirect(['index']);
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            }
         }
         else
         {
-            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            throw new ForbiddenHttpException('Este usuário não pode ser deletado, pois está cadastrado em alguma sala.');
         }
     }
 

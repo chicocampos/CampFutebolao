@@ -29,10 +29,11 @@ class Apostas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            //[['USUARIO_ID', 'JOGO_SALA_ID', 'RESULTADO_CASA', 'RESULTADO_VISITANTE'], 'required'],
+            [['RESULTADO_CASA', 'RESULTADO_VISITANTE'], 'required'],
             [['USUARIO_ID', 'JOGO_SALA_ID', 'RESULTADO_CASA', 'RESULTADO_VISITANTE'], 'integer'],
             [['JOGO_SALA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => JogosSala::className(), 'targetAttribute' => ['JOGO_SALA_ID' => 'ID']],
             [['USUARIO_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['USUARIO_ID' => 'ID']],
+['USUARIO_ID', 'unique', 'targetAttribute' => ['USUARIO_ID', 'JOGO_SALA_ID']]
         ];
     }
 

@@ -4,11 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Campeonatos;
+use app\models\Times;
 use app\models\CampeonatosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 
 /**
  * CampeonatosController implements the CRUD actions for Campeonatos model.
@@ -126,15 +128,24 @@ class CampeonatosController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
-        {
-            $this->findModel($id)->delete();
+        $campeonato = Times::findOne(['CAMPEONATOS_ID'=>$id]);
+        
+        if(!$campeonato)
+            {
+            if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+            {
+                $this->findModel($id)->delete();
 
-            return $this->redirect(['index']);
+                return $this->redirect(['index']);
+            }
+            else
+            {
+                throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            }
         }
         else
         {
-            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+            throw new ForbiddenHttpException('Este campeonato não pode ser deletado, pois está cadastrado em algum time.');
         }
     }
 
