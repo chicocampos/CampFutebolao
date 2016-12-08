@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="salas-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Incluir', ['create'], ['class' => 'btn btn-success']) ?>
@@ -25,10 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID',
+            //'ID',
             'NOME',
             'VALOR_ENTRADA',
-            'OBSERVACAO:ntext',
+//            'OBSERVACAO:ntext',
+            [
+                'attribute' => 'jogo',
+                 'label' => 'Jogos',
+                'value' => function($model) {
+                    return $model->jogo->apresentacao;
+                }
+            ],
+//            'salas.jogossala.jogos.apresentacao',
             'ACERTO_RESULTADO',
             'ACERTO_TIME_CASA',
             'ACERTO_TIME_VISITANTE',

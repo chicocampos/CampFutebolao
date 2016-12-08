@@ -47,4 +47,8 @@ class Participantes extends \yii\db\ActiveRecord
             'PONTUACAO' => 'Pontuação',
         ];
     }
+    
+    public function getUsuarios(){
+        return $this->hasOne(Usuarios::className(), ['ID' => 'USUARIO_ID']);
+    }
 }

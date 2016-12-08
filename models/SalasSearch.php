@@ -12,6 +12,7 @@ use app\models\Salas;
  */
 class SalasSearch extends Salas
 {
+    public $jogo;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class SalasSearch extends Salas
     {
         return [
             [['ID', 'ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DIFERENCA', 'ADMINISTRADOR'], 'integer'],
-            [['NOME', 'OBSERVACAO'], 'safe'],
+            [['NOME', 'OBSERVACAO', 'jogo'], 'safe'],
             [['VALOR_ENTRADA'], 'number'],
         ];
     }

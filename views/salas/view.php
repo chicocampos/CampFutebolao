@@ -16,18 +16,17 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="salas-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+           <?= $model->ADMINISTRADOR == Yii::$app->user->identity->ID ? Html::a('Alterar', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) : '';?>
+           <?= $model->ADMINISTRADOR == Yii::$app->user->identity->ID ? Html::a('Excluir', ['delete', 'id' => $model->ID], [
+               'class' => 'btn btn-danger',
+               'data' => [
+                   'confirm' => 'Confirma a exclusão deste item?',
+                   'method' => 'post',
+               ],
+           ]) : '';?>
+           
 
-    <p>
-        <?= $model->ADMINISTRADOR == Yii::$app->user->identity->ID ? Html::a('Alterar', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) : '';?>
-        <?= $model->ADMINISTRADOR == Yii::$app->user->identity->ID ? Html::a('Excluir', ['delete', 'id' => $model->ID], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Confirma a exclusão deste item?',
-                'method' => 'post',
-            ],
-        ]) : '';?>
-        <?= $participa ? '' : Html::a('Participar', ['join', 'id' => $model->ID], ['class' => 'btn btn-primary']); ?>
-    </p>
+           <?= $participa ? '' : Html::a('Participar', ['join', 'id' => $model->ID], ['class' => 'btn btn-primary']); ?>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -45,11 +44,24 @@ $this->params['breadcrumbs'][] = $this->title;
         $i = 1;
         foreach($model->jogos as $jogo) :
         $jogoSala = JogosSala::find()->where(['SALA_ID'=>$model->ID])->andWhere(['JOGO_ID' => $jogo->ID])->one();
+            if ($participa) {
             echo 'Jogo '.$i.': '. $jogo->apresentacao .
                 ' <a class="btn btn-success" href="/campfutebolao/web/index.php?r=apostas%2fcreate&JOGO_SALA_ID='.$jogoSala->ID.'">APOSTAR </a>';
-            echo "<br>";
+            echo "<br>";    
+            }
+    
+
             $i++;
         endforeach;
+
+    ?>
+    
+    <?php
+        foreach($model->participantes as $participantes) {
+            echo "Usuário: " . $participantes->usuarios->APELIDO . " | Pontuação: " . $participantes->PONTUACAO . "<br>";
+        }
+            
+//        die(print_r($model->participantes,true));
 
     ?>
 

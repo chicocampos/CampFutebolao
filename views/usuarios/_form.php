@@ -24,7 +24,17 @@ use kartik\datecontrol\DateControl;
 
     <?= $form->field($model, 'SENHA')->passwordInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'OBSERVACAO')->textarea(['rows' => 6]) ?>
+    <?= "<br><strong>Termos de uso</strong>.
+        <br>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque porro earum quam, similique, molestias cupiditate esse repellat amet sed eum ipsum, suscipit, libero fuga voluptatem commodi hic odio eligendi.lorem loermlore Lorem ipsum dolor sit amet, consectetur adipisicing elit. In rerum deserunt neque enim temporibus, laudantium nulla laboriosam ut nobis, eum molestiae assumenda magnam labore. Dignissimos, inventore! Ut similique, sit laboriosam?
+        <br>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque porro earum quam, similique, molestias cupiditate esse repellat amet sed eum ipsum, suscipit, libero fuga voluptatem commodi hic odio eligendi.lorem loermlore Lorem ipsum dolor sit amet, consectetur adipisicing elit. In rerum deserunt neque enim temporibus, laudantium nulla laboriosam ut nobis, eum molestiae assumenda magnam labore. Dignissimos, inventore! Ut similique, sit laboriosam?Lorem ipsum dolor sit amet
+        
+        <br>
+        <br>
+    " ?>
+    
+
 
     <?= $form->field($model, 'ACEITA_TERMOS_USO')->checkbox(['1'=>'Aceito']) ?>
 

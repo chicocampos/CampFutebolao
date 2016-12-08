@@ -121,6 +121,7 @@ class JogosController extends Controller
             $model = $this->findModel($ID, $TIME_CASA_ID, $TIME_VISITANTE_ID);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//                die('a' . $model->ID);
                 $this->actionPlacar($model);
                 return $this->redirect(['view', 'ID' => $model->ID, 'TIME_CASA_ID' => $model->TIME_CASA_ID, 'TIME_VISITANTE_ID' => $model->TIME_VISITANTE_ID]);
             } else {
@@ -176,12 +177,11 @@ class JogosController extends Controller
     }
     
     public function actionPlacar($jogo){
-        if($jogo->REGISTRADO) return;
-        
+//        if($jogo->REGISTRADO) return;
+//        die('as' . $jogo->ID);
         $jogossalas = JogosSala::find()->where(["JOGO_ID"=>$jogo->ID])->all();
         foreach($jogossalas as $jogosala){
             $sala = Salas::find()->where(["ID"=>$jogosala->SALA_ID])->one();
-            
             $participantes = Participantes::find()->where(["SALA_ID"=>$sala->ID])->all();
             
             foreach($participantes as $participante){

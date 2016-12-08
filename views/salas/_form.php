@@ -32,17 +32,15 @@ use kartik\select2\Select2;
     <?= $form->field($model, 'ACERTO_DIFERENCA')->textInput() ?>
     
 <!--    Seleção dos jogos   -->
-
-    
     
     <?= 
         $form->field($model, 'jogos')->widget(Select2::classname(), [
-	    'data' => ArrayHelper::map(Jogos::find()->all(),'ID', 'Apresentacao'),
-	    'options' => ['placeholder' => 'Selecione o Jogo', 'multiple' => true],
+	    'data' => ArrayHelper::map(Jogos::find()->where(['>=','DATA_HORA', date('Y-m-d H:i:s')])->all(),'ID', 'Apresentacao'),
+	    'options' => ['placeholder' => 'Selecione o Jogo', 'multiple' => false],
 	    'pluginOptions' => [
             'tags' => true,
-            'tokenSeparators' => [',', ' '],
-            'maximumInputLength' => 10
+            //'tokenSeparators' => [',', ' '],
+            //'maximumInputLength' => 10
 	    ],
 	]);
     

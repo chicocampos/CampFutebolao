@@ -21,7 +21,7 @@ class CampeonatosController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
+            /*'access' => [
             'class' => AccessControl::className(),
             'only' => ['view', 'update', 'delete', 'index', 'create'],
             'rules' => [
@@ -30,7 +30,7 @@ class CampeonatosController extends Controller
                     'roles' => ['superadmin']
                 ],
             ]
-        ],            
+        ],       */     
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -74,14 +74,21 @@ class CampeonatosController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Campeonatos();
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $model = new Campeonatos();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
         }
     }
 
@@ -93,14 +100,21 @@ class CampeonatosController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->ID]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
         }
     }
 
@@ -112,9 +126,16 @@ class CampeonatosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->identity && Yii::$app->user->identity->SUPERADMIN == 1)
+        {
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else
+        {
+            throw new ForbiddenHttpException('Você não está autorizado a realizar essa ação.');
+        }
     }
 
     /**

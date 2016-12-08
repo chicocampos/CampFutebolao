@@ -87,15 +87,17 @@ class SalasController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $jogos = Yii::$app->request->post()['Salas']['jogos'];
-            //var_dump($jogos);
-            foreach($jogos as $id){
+//            echo print_r(Yii::$app->request->post(), true);
+//            die();
+//            foreach($jogos as $ID){
                 $jogoSala = new JogosSala();
-                $jogoSala->JOGO_ID = $id;
+                $jogoSala->JOGO_ID = $jogos;
                 $jogoSala->SALA_ID = $model->ID;
                 $jogoSala->save();
-            }
+//            }
             $participantes = Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
             ->andWhere(['SALA_ID'=>$model->ID])->one();
+//            die('teste');
             if(!$participantes)
             {
                 $participantes = new Participantes();
@@ -103,19 +105,20 @@ class SalasController extends Controller
                 $participantes->SALA_ID = $model->ID;
                 $participantes->PONTUACAO = 0;
                 $participantes->save();
-            }            
+            } 
+//            die ('teste');
             /*
             foreach($model->jogos as $jogo){
                 
             }*/
             
-            return $this->redirect(['view', 'ID' => $model->ID]);
+            return $this->redirect(['view', 'id' => $model->ID]);
         }
         else {
             return $this->render('create', [
                 'model' => $model,
-                //'jogos' => $jogos,
-                //'jogossala' => $jogossala,
+//                'jogos' => $jogos,
+//                'jogossala' => $jogossala,
             ]);
         }
     }
@@ -157,12 +160,12 @@ class SalasController extends Controller
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $jogos = Yii::$app->request->post()['Salas']['jogos'];
-            foreach($jogos as $id){
+            //foreach($jogos as $id){
                 $jogoSala = new JogosSala();
-                $jogoSala->JOGO_ID = $id;
+                $jogoSala->JOGO_ID = $jogos;
                 $jogoSala->SALA_ID = $model->ID;
                 $jogoSala->save();
-            }
+            //}
             
             $participantes = Participantes::find()->where(["USUARIO_ID"=>Yii::$app->user->identity->ID])
             ->andWhere(['SALA_ID'=>$model->ID])->one();
