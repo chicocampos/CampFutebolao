@@ -15,25 +15,25 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ID') ?>
+    <?php // $form->field($model, 'ID') ?>
 
     <?= $form->field($model, 'NOME') ?>
 
     <?= $form->field($model, 'VALOR_ENTRADA') ?>
 
-    <?= $form->field($model, 'OBSERVACAO') ?>
+    <?php // $form->field($model, 'OBSERVACAO') ?>
 
     <?= $form->field($model, 'ACERTO_RESULTADO') ?>
 
-    <?php // echo $form->field($model, 'ACERTO_TIME_CASA') ?>
+    <?= $form->field($model, 'ACERTO_TIME_CASA') ?>
 
-    <?php // echo $form->field($model, 'ACERTO_TIME_VISITANTE') ?>
+    <?= $form->field($model, 'ACERTO_TIME_VISITANTE') ?>
 
-    <?php // echo $form->field($model, 'ACERTO_DIFERENCA') ?>
+    <?= $form->field($model, 'ACERTO_DIFERENCA') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
+        <?php // Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

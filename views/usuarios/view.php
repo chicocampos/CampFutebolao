@@ -32,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'NOME',
             'APELIDO',
             'ACEITA_TERMOS_USO',
-            'DATA_NASCIMENTO',
+            [
+                'attribute' => 'DATA_NASCIMENTO',
+                'format' => ['date', 'php:d/m/Y']
+            ],
+            //'DATA_NASCIMENTO',
             'LOGIN',
             'SENHA',
             'OBSERVACAO:ntext',

@@ -28,9 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'ID',
+            //'ID',
             'RODADA',
-            'DATA_HORA',
+            //'DATA_HORA',
+            [
+                'attribute' => 'DATA_HORA',
+                'format' => ['datetime', 'php:d/m/Y - H:i']
+            ],   
             'GOLS_CASA',
             'GOLS_VISITANTE',
             'TIME_CASA_ID',

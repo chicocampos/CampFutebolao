@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="campeonatos-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Incluir', ['create'], ['class' => 'btn btn-success']) ?>
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID',
+            //'ID',
             'NOME',
             'DIVISAO',
 

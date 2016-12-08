@@ -15,19 +15,19 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ID') ?>
+    <?php // $form->field($model, 'ID') ?>
 
     <?= $form->field($model, 'NOME') ?>
 
     <?= $form->field($model, 'APELIDO') ?>
 
-    <?= $form->field($model, 'CAMPEONATOS_ID') ?>
+    <?php // $form->field($model, 'CAMPEONATOS_ID') ?>
 
     <?= $form->field($model, 'SIGLA') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
+        <?php // Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
