@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Salas;
+use app\models\Apostas;
 use app\models\JogosSala;
 use app\models\SalasSearch;
 use yii\web\Controller;
@@ -197,16 +198,18 @@ class SalasController extends Controller
     public function actionDelete($id)
     {
         $sala = Apostas::findOne(['JOGO_SALA_ID'=>$id]);
+        $salausuario = Apostas::findOne(['JOGO_SALA_ID'=>$id]);
         
         if(!$sala)
         {
-            $this->findModel($id)->delete();
+            //$this->findModel($id)->delete();
 
-            return $this->redirect(['index']);
+            //return $this->redirect(['index']);
+            throw new ForbiddenHttpException('Uma sala de apostas, não pode ser deletada!');
         }
         else
         {
-            throw new ForbiddenHttpException('Esta sala não pode ser deletado, pois possui apostas');
+            throw new ForbiddenHttpException('Uma sala de apostas, não pode ser deletada!');
         }
     }
 

@@ -33,10 +33,11 @@ class Salas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['NOME', 'VALOR_ENTRADA'], 'required'],
-            [['VALOR_ENTRADA'], 'number'],
-            [['OBSERVACAO'], 'string'],
+            [['NOME', 'VALOR_ENTRADA', 'ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DIFERENCA', 'jogos'], 'required'],
+            [['VALOR_ENTRADA'], 'number', 'min' => 0, 'max' => 1000],
+            [['OBSERVACAO'], 'string', 'max' => 65500],
             [['ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DIFERENCA', 'ADMINISTRADOR'], 'integer'],
+            [['ACERTO_RESULTADO', 'ACERTO_TIME_CASA', 'ACERTO_TIME_VISITANTE', 'ACERTO_DIFERENCA'], 'integer', 'min' => 0, 'max' => 50],
             [['NOME'], 'string', 'max' => 50],
             [['TESTE'],'safe']
         ];

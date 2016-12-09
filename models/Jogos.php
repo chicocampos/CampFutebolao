@@ -33,6 +33,7 @@ class Jogos extends \yii\db\ActiveRecord
         return [
             [['RODADA', 'DATA_HORA', 'TIME_CASA_ID', 'TIME_VISITANTE_ID'], 'required'],
             [['RODADA', 'GOLS_CASA', 'GOLS_VISITANTE', 'TIME_CASA_ID', 'TIME_VISITANTE_ID'], 'integer'],
+            [['RODADA', 'GOLS_CASA', 'GOLS_VISITANTE'], 'integer', 'min' => 0, 'max' => 100],
             [['DATA_HORA'], 'safe'],
             [['TIME_CASA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Times::className(), 'targetAttribute' => ['TIME_CASA_ID' => 'ID']],
             [['TIME_VISITANTE_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Times::className(), 'targetAttribute' => ['TIME_VISITANTE_ID' => 'ID']],
@@ -58,5 +59,13 @@ class Jogos extends \yii\db\ActiveRecord
     public function getApresentacao(){
         return Times::find()->where(['ID' => $this->TIME_CASA_ID])->one()->APELIDO . 
              ' x ' . Times::find()->where(['ID' => $this->TIME_VISITANTE_ID])->one()->APELIDO;
+    }
+    
+    public function getTimeCasa() {
+        return $this->hasOne(Times::className(), ['ID' => 'TIME_CASA_ID']);
+    }
+    
+    public function getTimeVisitante() {
+        return $this->hasOne(Times::className(), ['ID' => 'TIME_VISITANTE_ID']);
     }
 }

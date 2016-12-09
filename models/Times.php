@@ -50,4 +50,8 @@ class Times extends \yii\db\ActiveRecord
             'SIGLA' => 'Sigla',
         ];
     }
+
+    public function getCampeonatos() {
+        return $this->hasOne(Campeonatos::className(), ['ID' => 'CAMPEONATOS_ID']);
+    }
 }

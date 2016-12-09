@@ -37,8 +37,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],   
             'GOLS_CASA',
             'GOLS_VISITANTE',
-            'TIME_CASA_ID',
-            'TIME_VISITANTE_ID',
+            //'TIME_CASA_ID',
+            [
+                'label' => 'Time da Casa',
+                'value' =>  call_user_func(function($model) {
+                    return "{$model->timeCasa->APELIDO}";
+                }, $model)
+            ],
+            [
+                'label' => 'Time Visitante',
+                'value' =>  call_user_func(function($model) {
+                    return "{$model->timeVisitante->APELIDO}";
+                }, $model)
+            ],
+            //'TIME_VISITANTE_ID',
         ],
     ]) ?>
 

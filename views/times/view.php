@@ -28,10 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'ID',
+            //'ID',
             'NOME',
             'APELIDO',
-            'CAMPEONATOS_ID',
+            //'CAMPEONATOS_ID',
+            [
+                'label' => 'Campeonato',
+                'value' =>  call_user_func(function($model) {
+                    return "{$model->campeonatos->NOME} - {$model->campeonatos->DIVISAO}";
+                }, $model)
+            ], 
             'SIGLA',
         ],
     ]) ?>
